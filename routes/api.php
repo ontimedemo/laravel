@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Projects
+Route::middleware('jsonapi')->prefix('project')->group(function() {
+//Route::prefix('project')->group(function() {
+    Route::get('/','ProjectController@index');
+    Route::get('/{project}', 'ProjectController@get');
+    Route::post('/', 'ProjectController@create');
+});
+

@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+    web:
+        image: nginx:latest
+        volumes:
+            - app-volume-sync:/var/www/html/:nocopy
+    php:
+        volumes:
+            - app-volume-sync:/var/www/html/:nocopy
+
+volumes:
+  app-volume-sync:
+    external: true

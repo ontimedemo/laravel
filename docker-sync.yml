@@ -1,0 +1,12 @@
+version: "2"
+
+options:
+  verbose: true
+
+syncs:
+  app-volume-sync:
+    src: './'
+    sync_strategy: 'native_osx'
+    sync_excludes: [ 'docker-compose.yml', 'docker-sync.yml', 'docker-composer-dev.yml', '.idea/*', 'var/cache/*', './git/*' ]
+    sync_userid: 1000
+    sync_groupid: 82
