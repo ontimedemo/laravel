@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //Projects
-Route::middleware('jsonapi')->prefix('project')->group(function() {
+Route::middleware(['jsonapi', 'auth.firebase'])->prefix('project')->group(function() {
 //Route::prefix('project')->group(function() {
     Route::get('/','ProjectController@index');
     Route::get('/{project}', 'ProjectController@get');
