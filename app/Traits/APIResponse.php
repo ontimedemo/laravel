@@ -21,15 +21,15 @@ trait APIResponse
     public static $NOTFOUND = 404;
 
     /**
-     * @param array $data
+     * @param $data
      * @param int $code
      * @param string $status
      * @return \Illuminate\Http\JsonResponse
      */
-    public function apiResponse(array $data, int $code = 200, string $status = 'success')
+    public function apiResponse($data, int $code = 200, string $status = 'success')
     {
         $response = [
-            'datetime' => new \DateTime('U'),
+            'datetime' => (new \DateTime())->format('c'),
             'status' => $status,
             'code' => $code
         ];
@@ -49,8 +49,12 @@ trait APIResponse
         return $this->apiResponse(['message' => $message], self::$NOTFOUND, 'error');
     }
 
-    public function apiCreated(array $data)
+    /**
+     * @param $data
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function apiCreated($data)
     {
-        
+        return $this->apiResponse($data, self::$CREATED);
     }
 }
