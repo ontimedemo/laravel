@@ -23,5 +23,7 @@ Route::middleware(['jsonapi', 'auth.firebase'])->prefix('project')->group(functi
     Route::get('/','ProjectController@index');
     Route::get('/{project}', 'ProjectController@get');
     Route::post('/', 'ProjectController@create');
+    Route::put('/{project}', 'ProjectController@update');
+    Route::delete('/{project}', 'ProjectController@delete');
 });
 

@@ -41,10 +41,10 @@ trait APIResponse
     }
 
     /**
-     * @param string $message
+     * @param $message
      * @return \Illuminate\Http\JsonResponse
      */
-    public function apiError(string $message)
+    public function apiError($message)
     {
         return $this->apiResponse(['message' => $message], self::$NOTFOUND, 'error');
     }
@@ -56,5 +56,10 @@ trait APIResponse
     public function apiCreated($data)
     {
         return $this->apiResponse($data, self::$CREATED);
+    }
+
+    public function apiDelete($message)
+    {
+        return $this->apiResponse(['message' => $message]);
     }
 }

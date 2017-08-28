@@ -23,7 +23,7 @@ class ProjectController extends Controller
      */
     public function get(Project $project)
     {
-        return response()->json($project);
+        return $this->apiResponse($project);
     }
 
     /**
@@ -37,10 +37,15 @@ class ProjectController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->getMessageBag()->all()], 400);
+            return $this->apiError($validator->getMessageBag()->all());
         }
-        $project = Project::create($request->all());
-        return response()->json($project, APIResponse::$CREATED);
+
+        try {
+            $project = Project::create($request->all());
+        } catch(\Throwable $e) {
+            return $this->apiError($e->getMessage());
+        }
+        return $this->apiCreated($project);
     }
 
     /**
@@ -50,8 +55,12 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $project->update($request);
-        return response()->json($project, 200);
+        try {
+            $project->update($request->all());
+        } catch (\Throwable $e) {
+            return $this->apiError($e->getMessage());
+        }
+        return $this->apiResponse($project);
     }
 
     /**
@@ -60,7 +69,11 @@ class ProjectController extends Controller
      */
     public function delete(Project $project)
     {
-        $project->delete();
-        return response()->json('deleted', 200);
+        try {
+            $project->delete();
+        } catch (\Throwable $e) {
+            return $this->apiError($e->getMessage());
+        }
+        return $this->apiDelete('Project deleted');
     }
 }
