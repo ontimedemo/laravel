@@ -15,9 +15,15 @@ class User extends Authenticatable
     ];
     const CREATED_AT = 'date_created';
     const UPDATED_AT = 'date_updated';
+    protected $appends = ['teams'];
 
     public function teams()
     {
         return $this->belongsToMany(Team::class, 'team_members');
+    }
+
+    public function getTeamsAttribute()
+    {
+        return $this->teams()->get()->makeHidden('pivot');
     }
 }
