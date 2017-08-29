@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
     use APIResponse;
+    //TODO: Add in proper security once projects are tied to users
     /**
      * @return \Illuminate\Http\JsonResponse
      */

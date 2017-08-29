@@ -19,7 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Projects
 Route::middleware(['jsonapi', 'auth.firebase'])->prefix('project')->group(function() {
-//Route::prefix('project')->group(function() {
     Route::get('/','ProjectController@index');
     Route::get('/{project}', 'ProjectController@get');
     Route::post('/', 'ProjectController@create');
@@ -27,3 +26,11 @@ Route::middleware(['jsonapi', 'auth.firebase'])->prefix('project')->group(functi
     Route::delete('/{project}', 'ProjectController@delete');
 });
 
+//Users
+Route::middleware(['jsonapi', 'auth.firebase'])->prefix('user')->group(function() {
+   Route::get('/', 'UserController@currentUser');
+   Route::get('/{user}', 'UserController@get');
+   Route::put('/', 'UserController@updateCurrentUser');
+});
+
+Route::middleware('jsonapi')->post('/user', 'UserController@create');
