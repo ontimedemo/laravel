@@ -32,7 +32,7 @@ class UserController extends Controller
     public function get(User $user)
     {
         try {
-            return $this->apiResponse($user->makeHidden(['firebase_uid', 'date_updated']));
+            return $this->apiResponse($user->makeHidden(['date_updated']));
         } catch (\Throwable $e) {
             return $this->apiError($e->getMessage());
         }

@@ -11,9 +11,16 @@ class Team extends Model
     const UPDATED_AT = 'date_updated';
     protected $fillable = ['name', 'url', 'owner'];
 
+    protected $attributes = ['owner'];
+
     public function owner()
     {
         return $this->hasOne(User::class, 'id', 'owner_id');
+    }
+
+    public function getOwnerAttribute()
+    {
+        return $this->owner()->get();
     }
 
     public function users()
