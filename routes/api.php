@@ -34,3 +34,11 @@ Route::middleware(['jsonapi', 'auth.firebase'])->prefix('user')->group(function(
 });
 
 Route::middleware('jsonapi')->post('/user', 'UserController@create');
+
+//Teams
+Route::middleware(['jsonapi', 'auth.firebase'])->prefix('team')->group(function() {
+    Route::get('/{team}', 'TeamController@get');
+    Route::post('/', 'TeamController@create');
+    Route::put('/{team}', 'TeamController@update');
+    Route::delete('/{team}', 'TeamController@delete');
+});

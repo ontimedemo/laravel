@@ -22,7 +22,11 @@ class UserController extends Controller
      */
     public function currentUser()
     {
-        return $this->apiResponse(Auth::user());
+        $user = Auth::user();
+        $teams = $user->teams()->get()->makeHidden('pivot');
+        $user = $user->toArray();
+        $user['teams'] = $teams;
+        return $this->apiResponse($user);
     }
 
     /**

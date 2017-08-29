@@ -15,4 +15,9 @@ class User extends Authenticatable
     ];
     const CREATED_AT = 'date_created';
     const UPDATED_AT = 'date_updated';
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'team_members');
+    }
 }
