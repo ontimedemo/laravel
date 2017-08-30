@@ -70,7 +70,7 @@ class UserController extends Controller
         try {
             $user = Auth::user();
             $user->update($request->all());
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             return $this->apiError($e->getMessage());
         }
         return $this->apiResponse($user);

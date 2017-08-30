@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sean
- * Date: 8/27/17
- * Time: 10:44 PM
- */
 
 namespace App\Traits;
-
 
 trait APIResponse
 {

@@ -43,7 +43,7 @@ class ProjectController extends Controller
 
         try {
             $project = Project::create($request->all());
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             return $this->apiError($e->getMessage());
         }
         return $this->apiCreated($project);
