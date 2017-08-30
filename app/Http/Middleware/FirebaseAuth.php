@@ -42,6 +42,5 @@ class FirebaseAuth
             return response()->json($errorMessage, $errorCode);
         }
         return $next($request);
-
     }
 }
