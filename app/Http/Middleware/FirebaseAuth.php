@@ -27,13 +27,11 @@ class FirebaseAuth
             if ($authToken === null) {
                 throw new \InvalidArgumentException('No authentication token found');
             }
-            Log::info('authToken => ' .  $authToken);
             $serviceAccount = ServiceAccount::fromJsonFile(config_path() . '/firebase.json');
             $firebase = (new Factory)->withServiceAccount($serviceAccount)->create();
             $tokenHandler = $firebase->getTokenHandler();
             $token = $tokenHandler->verifyIdToken($authToken);
             $userId = $token->getClaim('user_id');
-            Log::info('userId => ' . $userId);
             $user = User::where('firebase_uid', $userId)->firstOrFail();
             if (empty($user)) {
                 throw new \InvalidArgumentException('No user found');
