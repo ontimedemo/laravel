@@ -9,18 +9,11 @@ class Team extends Model
     protected $team = 'teams';
     const CREATED_AT = 'date_created';
     const UPDATED_AT = 'date_updated';
-    protected $fillable = ['name', 'url', 'owner'];
-
-    protected $attributes = ['owner'];
+    protected $fillable = ['name', 'url', 'owner_id'];
 
     public function owner()
     {
         return $this->hasOne(User::class, 'id', 'owner_id');
-    }
-
-    public function getOwnerAttribute()
-    {
-        return $this->owner()->get();
     }
 
     public function users()

@@ -19,12 +19,17 @@ class ProjectController extends Controller
     }
 
     /**
-     * @param Project $project
+     * @param int $project
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get(Project $project)
+    public function get(int $project)
     {
-        return $this->apiResponse($project);
+        try {
+            $project = Project::findOrFail($project);
+            return $this->apiResponse($project);
+        } catch (\Throwable $e) {
+            return $this->apiError($e->getMessage());
+        }
     }
 
     /**
@@ -51,12 +56,13 @@ class ProjectController extends Controller
 
     /**
      * @param Request $request
-     * @param Project $project
+     * @param int $project
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, int $project)
     {
         try {
+            $project = Project::findOrFail($project);
             $project->update($request->all());
         } catch (\Throwable $e) {
             return $this->apiError($e->getMessage());
@@ -65,12 +71,13 @@ class ProjectController extends Controller
     }
 
     /**
-     * @param Project $project
+     * @param int $project
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(Project $project)
+    public function delete(int $project)
     {
         try {
+            $project = Project::findOrFail($project);
             $project->delete();
         } catch (\Throwable $e) {
             return $this->apiError($e->getMessage());

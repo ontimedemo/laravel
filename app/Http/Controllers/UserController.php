@@ -26,12 +26,13 @@ class UserController extends Controller
     }
 
     /**
-     * @param User $user
+     * @param int $user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get(User $user)
+    public function get(int $user)
     {
         try {
+            $user = User::findOrFail($user);
             return $this->apiResponse($user->makeHidden(['date_updated']));
         } catch (\Throwable $e) {
             return $this->apiError($e->getMessage());
