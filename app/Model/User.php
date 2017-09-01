@@ -15,7 +15,7 @@ class User extends Authenticatable
     ];
     const CREATED_AT = 'date_created';
     const UPDATED_AT = 'date_updated';
-    protected $hidden = ['firebase_uid'];
+    protected $hidden = ['firebase_uid', 'pivot'];
 
     public function teams()
     {

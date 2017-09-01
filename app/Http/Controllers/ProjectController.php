@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Model\Project;
 use App\Traits\APIResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProjectController extends BaseController
 {
     use APIResponse;
-    //TODO: Add in proper security once projects are tied to users
+
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * Returns projects associated with the current user
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         try {
             $projects = Project::whereIn('team_id', $this->getUserTeams()->pluck('teams.id'))
@@ -25,10 +27,11 @@ class ProjectController extends BaseController
     }
 
     /**
+     * Return the project with the supplied id
      * @param int $project
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function get(int $project)
+    public function get(int $project): JsonResponse
     {
         try {
             $project = Project::findOrFail($project);
@@ -39,10 +42,11 @@ class ProjectController extends BaseController
     }
 
     /**
+     * Create a new project
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function create(Request $request)
+    public function create(Request $request): JsonResponse
     {
         $validator = \Validator::make($request->all(), [
             'name' => 'required|unique:projects'
@@ -61,11 +65,12 @@ class ProjectController extends BaseController
     }
 
     /**
+     * Update a current project
      * @param Request $request
      * @param int $project
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function update(Request $request, int $project)
+    public function update(Request $request, int $project): JsonResponse
     {
         try {
             $project = Project::findOrFail($project);
@@ -77,10 +82,11 @@ class ProjectController extends BaseController
     }
 
     /**
+     * Delete a project with the supplied id
      * @param int $project
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function delete(int $project)
+    public function delete(int $project): JsonResponse
     {
         try {
             $project = Project::findOrFail($project);

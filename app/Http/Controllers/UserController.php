@@ -10,26 +10,32 @@ namespace App\Http\Controllers;
 
 use App\Model\User;
 use App\Traits\APIResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
     use APIResponse;
 
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function currentUser()
+    public function currentUser(): JsonResponse
     {
-        return $this->apiResponse(Auth::user());
+        try {
+            $user = $this->getUser();
+            return $this->apiResponse(array_merge($user->toArray(), ['teams' => $user->teams()->get()]));
+        } catch (\Throwable $e) {
+            return $this->apiError($e->getMessage());
+        }
     }
 
     /**
      * @param int $user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get(int $user)
+    public function get(int $user): JsonResponse
     {
         try {
             $user = User::findOrFail($user);
@@ -43,7 +49,7 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function create(Request $request)
+    public function create(Request $request): JsonResponse
     {
         $validator = \Validator::make($request->all(), [
            'email' => 'required|unique:users|email',
@@ -66,7 +72,7 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateCurrentUser(Request $request)
+    public function updateCurrentUser(Request $request): JsonResponse
     {
         try {
             $user = Auth::user();

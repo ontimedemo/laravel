@@ -10,6 +10,7 @@ class Team extends Model
     const CREATED_AT = 'date_created';
     const UPDATED_AT = 'date_updated';
     protected $fillable = ['name', 'url', 'owner_id'];
+    protected $hidden = ['pivot'];
 
     public function owner()
     {
