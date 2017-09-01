@@ -6,7 +6,7 @@ use App\Model\Project;
 use App\Traits\APIResponse;
 use Illuminate\Http\Request;
 
-class ProjectController extends Controller
+class ProjectController extends BaseController
 {
     use APIResponse;
     //TODO: Add in proper security once projects are tied to users
@@ -15,7 +15,13 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return $this->apiResponse(Project::all());
+        try {
+            $projects = Project::whereIn('team_id', $this->getUserTeams()->pluck('teams.id'))
+                ->orWhere('user_id', '=', $this->getUser()->id)->get();
+            return $this->apiResponse($projects);
+        } catch (\Throwable $e) {
+            return $this->apiError($e->getMessage());
+        }
     }
 
     /**
