@@ -35,7 +35,7 @@ class TimelogController extends BaseController
             Task::findOrFail($task); //Check to make sure the task exists
             $data = [
                 'user_id' => $this->getUser()->id,
-                'start' => (new \DateTime)->format('m/d/Y h:ia'),
+                'start' => (new \DateTime)->format('Y-m-d H:i:s'),
                 'task_id' => $task
             ];
             $log = TimeLog::create($data);
@@ -53,7 +53,7 @@ class TimelogController extends BaseController
     {
         try {
             $log = TimeLog::findOrFail($log);
-            $log->end = (new \DateTime)->format('m/d/Y h:ia');
+            $log->end = (new \DateTime)->format('Y-m-d H:i:s');
             $log->update();
             return $this->apiResponse($log);
         } catch (\Throwable $e) {

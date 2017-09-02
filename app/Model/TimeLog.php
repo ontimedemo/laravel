@@ -10,6 +10,7 @@ class TimeLog extends Model
     protected $table = 'timelogs';
     const CREATED_AT = 'date_created';
     const UPDATED_AT = 'date_updated';
+    protected $fillable = ['user_id', 'task_id', 'start'];
 
     /**
      * @return BelongsTo
