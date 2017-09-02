@@ -46,3 +46,10 @@ Route::group(['middleware' => ['auth.firebase', 'jsonapi'], 'prefix' => 'task'],
     Route::post('/', 'TaskController@create');
     Route::put('/{task}/assign', 'TaskController@assign');
 });
+
+//Time
+Route::group(['middleware' => ['auth.firebase', 'jsonapi'], 'prefix' => 'time'], function () {
+    Route::get('/', 'TimelogController@index');
+    Route::post('/checkin/{task}', 'TimelogController@checkin');
+    Route::post('/checkout/{log}', 'TimelogController@checkout');
+});

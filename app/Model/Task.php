@@ -25,4 +25,9 @@ class Task extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    public function logs()
+    {
+        return $this->hasMany(TimeLog::class);
+    }
 }

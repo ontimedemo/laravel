@@ -55,7 +55,7 @@ class TaskController extends BaseController
             }
             $data = array_merge($request->all(), ['created_by' => $this->getUser()->id, 'status' => 'todo']);
             $task = Task::create($data);
-            return $this->apiResponse($task);
+            return $this->apiCreated($task);
         } catch (\Throwable $e) {
             return $this->apiError($e->getMessage());
         }

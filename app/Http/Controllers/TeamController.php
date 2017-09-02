@@ -43,7 +43,7 @@ class TeamController extends BaseController
             $data = array_merge($request->all(), ['owner_id' => $ownerId]);
             $team = Team::create($data);
             $team->users()->attach($ownerId);
-            return $this->apiResponse($team);
+            return $this->apiCreated($team);
         } catch (\Throwable $e) {
             return $this->apiError($e->getMessage());
         }
