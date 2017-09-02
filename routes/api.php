@@ -13,13 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 //Projects
-Route::middleware(['jsonapi', 'auth.firebase'])->prefix('project')->group(function() {
-    Route::get('/','ProjectController@index');
+Route::group(['middleware' => ['auth.firebase', 'jsonapi'], 'prefix' => 'project'], function () {
+    Route::get('/', 'ProjectController@index');
     Route::get('/{project}', 'ProjectController@get');
     Route::post('/', 'ProjectController@create');
     Route::put('/{project}', 'ProjectController@update');
@@ -27,18 +23,26 @@ Route::middleware(['jsonapi', 'auth.firebase'])->prefix('project')->group(functi
 });
 
 //Users
-Route::middleware(['jsonapi', 'auth.firebase'])->prefix('user')->group(function() {
-   Route::get('/', 'UserController@currentUser');
-   Route::get('/{user}', 'UserController@get');
-   Route::put('/', 'UserController@updateCurrentUser');
+Route::group(['middleware' => ['auth.firebase', 'jsonapi'], 'prefix' => 'user'], function () {
+    Route::get('/', 'UserController@currentUser');
+    Route::get('/{user}', 'UserController@get');
+    Route::put('/', 'UserController@updateCurrentUser');
 });
-
 Route::middleware('jsonapi')->post('/user', 'UserController@create');
 
 //Teams
-Route::middleware(['jsonapi', 'auth.firebase'])->prefix('team')->group(function() {
+Route::group(['middleware' => ['auth.firebase', 'jsonapi'], 'prefix' => 'team'], function () {
     Route::get('/{team}', 'TeamController@get');
     Route::post('/', 'TeamController@create');
     Route::put('/{team}', 'TeamController@update');
     Route::delete('/{team}', 'TeamController@delete');
+    Route::put('/{team}/adduser', 'TeamController@addUser');
+});
+
+//Tasks
+Route::group(['middleware' => ['auth.firebase', 'jsonapi'], 'prefix' => 'task'], function () {
+    Route::get('/', 'TaskController@index');
+    Route::get('/{task}', 'TaskController@get');
+    Route::post('/', 'TaskController@create');
+    Route::put('/{task}/assign', 'TaskController@assign');
 });

@@ -88,14 +88,14 @@ class TeamController extends BaseController
      * @param int $user
      * @return JsonResponse
      */
-    public function addUser(int $team, int $user): JsonResponse
+    public function addUser(Request $request, int $team): JsonResponse
     {
         try {
             $team = Team::findOrFail($team);
             if ($team->owner()->get('id') !== $this->getUser()->id) {
                 return $this->apiError('User is not the owner of the team');
             }
-            $team->users()->attach($user);
+            $team->users()->attach($request->get('user_id'));
             return $this->apiResponse(['message' => 'User added to the team']);
         } catch (\Throwable $e) {
             return $this->apiError($e->getMessage());
