@@ -52,4 +52,5 @@ Route::group(['middleware' => ['auth.firebase', 'jsonapi'], 'prefix' => 'time'],
     Route::get('/', 'TimelogController@index');
     Route::get('/checkin/{task}', 'TimelogController@checkin');
     Route::get('/checkout/{log}', 'TimelogController@checkout');
+    Route::put('/{log}', 'TimelogController@update');
 });

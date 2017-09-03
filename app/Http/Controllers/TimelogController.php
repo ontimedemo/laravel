@@ -60,4 +60,20 @@ class TimelogController extends BaseController
             return $this->apiError($e->getMessage());
         }
     }
+
+    /**
+     * @param Request $request
+     * @param int $log
+     * @return JsonResponse
+     */
+    public function update(Request $request, int $log)
+    {
+        try {
+            $log = TimeLog::findOrFail($log);
+            $log->update($request->all());
+            return $this->apiResponse($log);
+        } catch (\Throwable $e) {
+            return $this->apiError($e->getMessage());
+        }
+    }
 }
